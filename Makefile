@@ -1,7 +1,6 @@
 DOKKU_VERSION = master
 
 SSHCOMMAND_URL ?= https://raw.github.com/progrium/sshcommand/master/sshcommand
-PLUGINHOOK_URL ?= https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb
 STACK_URL ?= https://github.com/progrium/buildstep.git
 PREBUILT_STACK_URL ?= https://github.com/progrium/buildstep/releases/download/2014-03-08/2014-03-08_429d4a9deb.tar.gz
 DOKKU_ROOT ?= /home/dokku
@@ -48,25 +47,16 @@ sshcommand:
 	sshcommand create dokku /usr/local/bin/dokku
 
 pluginhook:
-	wget -qO /tmp/pluginhook_0.1.0_amd64.deb ${PLUGINHOOK_URL}
-	dpkg -i /tmp/pluginhook_0.1.0_amd64.deb
+	emerge -vu dev-vcs/pluginhook
 
 docker: aufs
-	apt-get install -qq -y curl
+	emerge -vu --ask n app-emulation/docker dev-python/docker-py dev-python/dockerpty
 	egrep -i "^docker" /etc/group || groupadd docker
 	usermod -aG docker dokku
-	curl --silent https://get.docker.io/gpg | apt-key add -
-	echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
-	apt-get update
-ifdef DOCKER_VERSION
-	apt-get install -qq -y lxc-docker-${DOCKER_VERSION}
-else
-	apt-get install -qq -y lxc-docker
-endif
 	sleep 2 # give docker a moment i guess
 
 aufs:
-	lsmod | grep aufs || modprobe aufs || apt-get install -qq -y linux-image-extra-`uname -r` > /dev/null
+	echo "Enable aufs with USE flags"
 
 stack:
 	@echo "Start building buildstep"

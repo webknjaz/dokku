@@ -1,18 +1,10 @@
 #!/usr/bin/env bash
 set -eo pipefail
-export DEBIAN_FRONTEND=noninteractive
-export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/progrium/dokku.git"}
 
-if ! which apt-get &>/dev/null
-then
-  echo "This installation script requires apt-get. For manual installation instructions, consult https://github.com/progrium/dokku ."
-  exit 1
-fi
+export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/webknjaz/dokku.git"}
 
-apt-get update
-apt-get install -qq -y git make curl software-properties-common man-db
-
-[[ `lsb_release -sr` == "12.04" ]] && apt-get install -qq -y python-software-properties
+eix-sync || emerge --sync
+emerge -vu git make curl ca-certificates dev-python/dbus-python dev-python/pygobject dev-python/pycurl sys-apps/man-db
 
 cd ~ && test -d dokku || git clone $DOKKU_REPO
 cd dokku
@@ -28,4 +20,4 @@ make install
 
 echo
 echo "Almost done! For next steps on configuration:"
-echo "  https://github.com/progrium/dokku#configuring"
+echo "  https://github.com/webknjaz/dokku#configuring"
