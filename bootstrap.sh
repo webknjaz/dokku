@@ -3,7 +3,6 @@ set -eo pipefail
 
 export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/webknjaz/dokku.git"}
 
-eix-sync || emerge --sync
 emerge -vu git make curl ca-certificates dev-python/dbus-python dev-python/pygobject dev-python/pycurl sys-apps/man-db
 
 cd ~ && test -d dokku || git clone $DOKKU_REPO
