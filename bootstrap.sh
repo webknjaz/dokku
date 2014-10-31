@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+export EMERGE_DEFAULT_OPTS="-v"
 export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/webknjaz/dokku.git"}
 
 emerge -vu git make curl ca-certificates dev-python/dbus-python dev-python/pygobject dev-python/pycurl sys-apps/man-db

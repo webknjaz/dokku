@@ -47,10 +47,10 @@ sshcommand:
 	sshcommand create dokku /usr/local/bin/dokku
 
 pluginhook:
-	emerge -vu dev-vcs/pluginhook
+	EMERGE_DEFAULT_OPTS="-v" emerge -vu dev-vcs/pluginhook
 
 docker: aufs
-	emerge -vu app-emulation/docker dev-python/docker-py dev-python/dockerpty
+	EMERGE_DEFAULT_OPTS="-v" emerge -vu app-emulation/docker dev-python/docker-py dev-python/dockerpty
 	egrep -i "^docker" /etc/group || groupadd docker
 	usermod -aG docker dokku
 	sleep 2 # give docker a moment i guess
