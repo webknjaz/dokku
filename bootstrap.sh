@@ -4,7 +4,7 @@ set -eo pipefail
 export EMERGE_DEFAULT_OPTS="-v"
 export DOKKU_REPO=${DOKKU_REPO:-"https://github.com/webknjaz/dokku.git"}
 
-emerge -vu git make curl ca-certificates dev-python/dbus-python dev-python/pygobject dev-python/pycurl sys-apps/man-db
+EMERGE_DEFAULT_OPTS="-v" emerge -vu git make curl ca-certificates dev-python/dbus-python dev-python/pygobject dev-python/pycurl sys-apps/man-db
 
 cd ~ && test -d dokku || git clone $DOKKU_REPO
 cd dokku
