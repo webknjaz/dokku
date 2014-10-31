@@ -11,6 +11,9 @@ fi
 
 # if dokku.conf has not been created, create it
 if [[ ! -f /etc/nginx/conf.d/dokku.conf ]]; then
+  if [[ ! -d /etc/nginx/conf.d/ ]]; then
+      mkdir -p /etc/nginx/conf.d/
+  fi
   cat<<EOF > /etc/nginx/conf.d/dokku.conf
 include $DOKKU_ROOT/*/nginx.conf;
 
