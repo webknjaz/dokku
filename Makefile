@@ -50,7 +50,7 @@ pluginhook:
 	emerge -vu dev-vcs/pluginhook
 
 docker: aufs
-	emerge -vu --ask n app-emulation/docker dev-python/docker-py dev-python/dockerpty
+	emerge -vu app-emulation/docker dev-python/docker-py dev-python/dockerpty
 	egrep -i "^docker" /etc/group || groupadd docker
 	usermod -aG docker dokku
 	sleep 2 # give docker a moment i guess
